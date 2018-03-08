@@ -1,0 +1,190 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Codes for AUT Image Processing Workshop 2018</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-08"><meta name="DC.source" content="StartTraining.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Codes for AUT Image Processing Workshop 2018</h1><!--introduction--><p>Lecture 7: Traingin Cascade Detectors in MATLAB</p><p>Taught by: Nima Mahmoudi -- <a href="mailto:nima_mahmoudi@aut.ac.ir">nima_mahmoudi@aut.ac.ir</a>, <a href="mailto:nmahmoud@ualberta.ca">nmahmoud@ualberta.ca</a></p><p>This code is released under the GPLv3 license for non-commercial use only. For other types of license please contact me.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Some must-knows</a></li><li><a href="#2">Initialize the Detector</a></li></ul></div><h2 id="1">Some must-knows</h2><p>We must be aware of different outcomes of a detector: * True Positive * False Positive * True Negative * False Negative</p><p><img vspace="5" hspace="5" src="traincascadeobjectdetector_overview.png" alt=""> </p><p>Keep in mind that you can train new detectors using Image Labeler App.</p><p><img vspace="5" hspace="5" src="traincascadeobjectdetector_negativeimages.png" alt=""> </p><h2 id="2">Initialize the Detector</h2><p>Load the positive samples data from a MAT file. The file contains a table specifying bounding boxes for several object categories. The table was exported from the Training Image Labeler app.</p><p>Load positive samples.</p><pre class="codeinput">load(<span class="string">'stopSignsAndCars.mat'</span>);
+</pre><p>Select the bounding boxes for stop signs from the table.</p><pre class="codeinput">positiveInstances = stopSignsAndCars(:,1:2);
+</pre><p>Add the image directory to the MATLAB path.</p><pre class="codeinput">imDir = fullfile(matlabroot,<span class="string">'toolbox'</span>,<span class="string">'vision'</span>,<span class="string">'visiondata'</span>,<span class="keyword">...</span>
+    <span class="string">'stopSignImages'</span>);
+addpath(imDir);
+</pre><p>Specify the foler for negative images.</p><pre class="codeinput">negativeFolder = fullfile(matlabroot,<span class="string">'toolbox'</span>,<span class="string">'vision'</span>,<span class="string">'visiondata'</span>,<span class="keyword">...</span>
+    <span class="string">'nonStopSigns'</span>);
+</pre><p>Create an <tt>imageDatastore</tt> object containing negative images.</p><pre class="codeinput">negativeImages = imageDatastore(negativeFolder);
+</pre><p>Train a cascade object detector called 'stopSignDetector.xml' using HOG features. NOTE: The command can take several minutes to run.</p><pre class="codeinput">trainCascadeObjectDetector(<span class="string">'stopSignDetector.xml'</span>,positiveInstances, <span class="keyword">...</span>
+    negativeFolder,<span class="string">'FalseAlarmRate'</span>,0.1,<span class="string">'NumCascadeStages'</span>,5);
+</pre><pre class="codeoutput">
+Automatically setting ObjectTrainingSize to [ 35, 32 ]
+Using at most 42 of 42 positive samples per stage
+Using at most 84 negative samples per stage
+
+--cascadeParams--
+Training stage 1 of 5
+[........................................................................]
+Used 42 positive and 84 negative samples
+Time to train stage 1: 0 seconds
+
+Training stage 2 of 5
+[........................................................................]
+Used 42 positive and 84 negative samples
+Time to train stage 2: 0 seconds
+
+Training stage 3 of 5
+[........................................................................]
+Used 42 positive and 84 negative samples
+Time to train stage 3: 2 seconds
+
+Training stage 4 of 5
+[........................................................................]
+Used 42 positive and 84 negative samples
+Time to train stage 4: 5 seconds
+
+Training stage 5 of 5
+[........................................................................]
+Used 42 positive and 17 negative samples
+Time to train stage 5: 9 seconds
+
+Training complete
+</pre><p>Use the newly trained classifier to detect a stop sign in an image.</p><pre class="codeinput">detector = vision.CascadeObjectDetector(<span class="string">'stopSignDetector.xml'</span>);
+</pre><p>Read the test image.</p><pre class="codeinput">img = imread(<span class="string">'stopSignTest.jpg'</span>);
+</pre><p>Detect a stop sign.</p><pre class="codeinput">bbox = step(detector,img);
+</pre><p>Insert bounding box rectangles and return the marked image.</p><pre class="codeinput"> detectedImg = insertObjectAnnotation(img,<span class="string">'rectangle'</span>,bbox,<span class="string">'stop sign'</span>);
+</pre><p>Display the detected stop sign.</p><pre class="codeinput">figure; imshow(detectedImg);
+</pre><img vspace="5" hspace="5" src="StartTraining_01.png" style="width:671px;height:385px;" alt=""> <p>Remove the image directory from the path.</p><pre class="codeinput">rmpath(imDir);
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Codes for AUT Image Processing Workshop 2018
+% Lecture 7: Traingin Cascade Detectors in MATLAB
+% 
+% Taught by: Nima Mahmoudi REPLACE_WITH_DASH_DASH nima_mahmoudi@aut.ac.ir, nmahmoud@ualberta.ca
+% 
+% This code is released under the GPLv3 license for non-commercial
+% use only. For other types of license please contact me.
+
+%% Some must-knows
+% We must be aware of different outcomes of a detector:
+% * True Positive
+% * False Positive
+% * True Negative
+% * False Negative
+% 
+% <<traincascadeobjectdetector_overview.png>>
+% 
+% Keep in mind that you can train new detectors using Image Labeler App.
+% 
+% <<traincascadeobjectdetector_negativeimages.png>>
+% 
+% 
+
+%% Initialize the Detector
+% Load the positive samples data from a MAT file. The file contains a table 
+% specifying bounding boxes for several object categories. The table was 
+% exported from the Training Image Labeler app.
+
+%%
+% Load positive samples.
+load('stopSignsAndCars.mat');
+%%
+% Select the bounding boxes for stop signs from the table.
+positiveInstances = stopSignsAndCars(:,1:2);
+%%
+% Add the image directory to the MATLAB path.
+imDir = fullfile(matlabroot,'toolbox','vision','visiondata',...
+    'stopSignImages');
+addpath(imDir);
+%%
+% Specify the foler for negative images.
+negativeFolder = fullfile(matlabroot,'toolbox','vision','visiondata',...
+    'nonStopSigns');
+%%
+% Create an |imageDatastore| object containing negative images.
+negativeImages = imageDatastore(negativeFolder);
+%%
+% Train a cascade object detector called 'stopSignDetector.xml'
+% using HOG features.
+% NOTE: The command can take several minutes to run.
+trainCascadeObjectDetector('stopSignDetector.xml',positiveInstances, ...
+    negativeFolder,'FalseAlarmRate',0.1,'NumCascadeStages',5);
+%%
+% Use the newly trained classifier to detect a stop sign in an image.
+detector = vision.CascadeObjectDetector('stopSignDetector.xml');
+%%
+% Read the test image.
+img = imread('stopSignTest.jpg');
+%%
+% Detect a stop sign.
+bbox = step(detector,img); 
+%%
+% Insert bounding box rectangles and return the marked image.
+ detectedImg = insertObjectAnnotation(img,'rectangle',bbox,'stop sign');
+%%
+% Display the detected stop sign.
+figure; imshow(detectedImg);
+%%
+% Remove the image directory from the path.
+rmpath(imDir); 
+##### SOURCE END #####
+--></body></html>
