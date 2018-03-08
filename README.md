@@ -1,4 +1,4 @@
-# AUT Multimeda 2016 Codes and Slides
+# "Image Processing Workshop 2018: Training an Object Detector" files
 
 These are a collection of tutorials programmed in MATLAB mainly 
 about Computer Vision and Audio Processing taught in Workshop of
